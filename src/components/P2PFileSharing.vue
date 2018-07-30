@@ -8,7 +8,7 @@
             P2P File Sharing with IPFS
           </h1>
           <h2 class="subtitle">
-            <Form v-on:submit.prevent="onSubmit">
+            <Form v-if="state === State.Ready || state === State.Finished" v-on:submit.prevent="onSubmit">
               <b-field class="fileUpload">
                 <b-upload v-model="files"
                   drag-drop>
@@ -32,12 +32,12 @@
                 </a>
               </b-upload>
 
-              <b-field class="file">
+              <!-- <b-field class="file">
                 <span class="file-name"
                   v-if="files && files.length">
                   {{ files[0].name }}
                 </span>
-              </b-field>
+              </b-field> -->
             </Form>
 
             <div v-if="isIpfsLinkReady" class="card">
@@ -63,7 +63,7 @@
               </footer>
             </div>
 
-            <span v-if="ipfsHash === 'Uploading...'">Uploading...</span>
+            <span v-if="state === State.Uploading">Uploading...</span>
 
             <b-table v-if="isIpfsLinkReady" :data="ipfsGateways" class="linkTable">
               <template slot-scope="props">
@@ -89,10 +89,19 @@
 import ipfs from '@/js/ipfs'
 import ipfsGateways from '@/js/ipfsGateways'
 
+const State = {
+  Ready: 'Ready',
+  Uploading: 'Uploading',
+  Finished: 'Finished'
+}
+
 export default {
   name: 'P2PFileSharing',
   data () {
     return {
+      state: State.Ready,
+      State: State,
+
       ipfs: ipfs,
       files: [],
       dropFiles: [],
@@ -103,7 +112,7 @@ export default {
   },
   computed: {
     isIpfsLinkReady () {
-      return this.ipfsHash !== '' && this.ipfsHash !== 'Uploading...'
+      return this.state === State.Finished
     }
   },
   methods: {
@@ -125,7 +134,8 @@ export default {
     },
 
     async uploadToIpfs () {
-      this.ipfsHash = 'Uploading...'
+      this.state = State.Uploading
+      this.ipfsHash = ''
 
       // save document to IPFS,return its hash#, and set hash# to state
       // https:// github.com/ipfs/interface-ipfs-core/blob/master/SPEC/FILES.md#add
@@ -133,6 +143,7 @@ export default {
         console.log(err, ipfsHash)
         // setState by setting ipfsHash to ipfsHash[0].hash
         this.ipfsHash = ipfsHash[0].hash
+        this.state = State.Finished
       }) // await ipfs.add
     }
   },
