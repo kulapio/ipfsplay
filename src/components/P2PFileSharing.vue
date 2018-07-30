@@ -50,9 +50,9 @@
                 </div>
               </div>
               <footer class="card-footer">
-                <a href="#" class="card-footer-item">Copy Hash</a>
-                <a href="#" class="card-footer-item">Copy Public Link</a>
-                <a href="#" class="card-footer-item">Share</a>
+                <a class="card-footer-item" @click="copyHash">Copy Hash</a>
+                <a class="card-footer-item" @click="copyPublicLink">Copy Public Link</a>
+                <a class="card-footer-item" @click="doShare">Share</a>
               </footer>
             </div>
 
@@ -84,6 +84,7 @@
 <script>
 import ipfs from '@/js/ipfs'
 import ipfsGateways from '@/js/ipfsGateways'
+import { Toast } from 'buefy'
 
 const State = {
   Ready: 'Ready',
@@ -112,7 +113,6 @@ export default {
     }
   },
   methods: {
-
     async captureFile () {
       // console.log(`event ${event}`)
       // event.stopPropagation()
@@ -141,6 +141,32 @@ export default {
         this.ipfsHash = ipfsHash[0].hash
         this.state = State.Finished
       }) // await ipfs.add
+    },
+    copyText (text) {
+      this.$copyText(text).then(function (e) {
+        Toast.open({
+          message: 'Copied!',
+          position: 'is-bottom',
+          type: 'is-success'
+        })
+      }, function (e) {
+        Toast.open({
+          duration: 5000,
+          message: 'Can\'t copy',
+          position: 'is-bottom',
+          type: 'is-danger'
+        })
+      })
+    },
+    copyHash () {
+      this.copyText(this.ipfsHash)
+    },
+    copyPublicLink () {
+      const link = `${this.ipfsGateways[0].prefix}/${this.ipfsHash}`
+      this.copyText(link)
+    },
+    doShare () {
+      console.log('doShare')
     }
   },
   watch: {
