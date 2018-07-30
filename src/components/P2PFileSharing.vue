@@ -11,7 +11,6 @@
             <Form v-on:submit.prevent="onSubmit">
               <b-field class="fileUpload">
                 <b-upload v-model="files"
-                  multiple
                   drag-drop>
                   <section class="section">
                     <div class="content has-text-centered">
@@ -39,10 +38,6 @@
                   {{ files[0].name }}
                 </span>
               </b-field>
-
-              <!-- <Button bsStyle="primary" type="submit" class="button is-success">
-                Send it
-              </Button> -->
             </Form>
 
             <div v-if="isIpfsLinkReady" class="card">
@@ -129,7 +124,7 @@ export default {
       this.buffer = buffer
     },
 
-    async onSubmit () {
+    async uploadToIpfs () {
       this.ipfsHash = 'Uploading...'
 
       // save document to IPFS,return its hash#, and set hash# to state
@@ -148,7 +143,7 @@ export default {
       this.captureFile()
     },
     buffer (newValue, oldValue) {
-      this.onSubmit()
+      this.uploadToIpfs()
     }
   }
 }
