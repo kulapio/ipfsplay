@@ -28,7 +28,7 @@
               </header>
               <div class="card-content">
                 <div class="content">
-                  {{ ipfsHash }}
+                  <strong>{{ ipfsHash }}</strong>
                 </div>
               </div>
               <footer class="card-footer">
