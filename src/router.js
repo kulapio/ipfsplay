@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import WithEthereum from './views/WithEthereum'
 
 Vue.use(Router)
 
@@ -10,6 +11,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/WithEthereum',
+      name: 'WithEthereum',
+      component: WithEthereum
     },
     {
       path: '/about',
