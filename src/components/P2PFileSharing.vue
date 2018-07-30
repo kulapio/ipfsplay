@@ -62,6 +62,7 @@
 
 <script>
 import ipfs from '@/js/ipfs'
+import ipfsGateways from '@/js/ipfsGateways'
 
 export default {
   name: 'P2PFileSharing',
@@ -71,12 +72,7 @@ export default {
 
       ipfsHash: '',
       buffer: '',
-      ipfsGateways: [
-        { id: 1, prefix: 'https://ipfs.infura.io/ipfs' },
-        { id: 2, prefix: 'https://ipfs.io/ipfs' },
-        { id: 3, prefix: 'https://gateway.ipfs.io/ipfs' },
-        { id: 4, prefix: 'https://www.eternum.io/ipfs' }
-      ]
+      ipfsGateways: ipfsGateways
     }
   },
   computed: {

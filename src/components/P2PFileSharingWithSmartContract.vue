@@ -63,6 +63,7 @@
 <script>
 import Web3 from 'web3'
 import ipfs from '@/js/ipfs'
+import ipfsGateways from '@/js/ipfsGateways'
 import { address, abi } from '@/js/storehash'
 
 export default {
@@ -80,12 +81,7 @@ export default {
       transactionHash: '',
       gasUsed: '',
       txReceipt: '',
-      ipfsGateways: [
-        'https://ipfs.infura.io/ipfs',
-        'https://ipfs.io/ipfs',
-        'https://gateway.ipfs.io/ipfs',
-        'https://www.eternum.io/ipfs'
-      ]
+      ipfsGateways: ipfsGateways.map(gateway => gateway.prefix)
     }
   },
   mounted () {
