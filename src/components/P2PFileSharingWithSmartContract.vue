@@ -68,16 +68,16 @@
 </template>
 
 <script>
-import web3 from './web3'
+import Web3 from 'web3'
 import ipfs from './ipfs'
-import storehash from './storehash'
+import { address, abi } from './storehash'
 
 export default {
   name: 'P2PFileSharing',
   data () {
     return {
-      web3: web3,
-      storehash: storehash,
+      web3: null,
+      storehash: null,
       ipfs: ipfs,
 
       ipfsHash: '',
@@ -95,16 +95,18 @@ export default {
       ]
     }
   },
+  mounted () {
+    this.createWeb3()
+    this.initContract()
+  },
   methods: {
-    // fileChange (event) {
-    //   console.log(`event ${event}`)
-    //   // console.log(`file ${event.target.files[0]}`)
+    createWeb3 () {
+      this.web3 = new Web3(window.web3.currentProvider)
+    },
 
-    //   const file = event.target.files[0]
-    //   let reader = new window.FileReader()
-    //   reader.readAsArrayBuffer(file)
-    //   reader.onloadend = () => this.convertToBuffer(reader)
-    // },
+    initContract () {
+      this.storehash = new this.web3.eth.Contract(abi, address)
+    },
 
     async captureFile (event) {
       console.log(`event ${event}`)
@@ -128,7 +130,7 @@ export default {
         this.gasUsed = 'waiting...'
         // get Transaction Receipt in console on click
         // See: https://web3js.readthedocs.io/en/1.0/web3-eth.html#gettransactionreceipt
-        await web3.eth.getTransactionReceipt(this.transactionHash, (err, txReceipt) => {
+        await this.web3.eth.getTransactionReceipt(this.transactionHash, (err, txReceipt) => {
           console.log(err, txReceipt)
           this.txReceipt = txReceipt
         })
@@ -143,11 +145,11 @@ export default {
     async onSubmit (event) {
       // event.preventDefault()
       // bring in user's metamask account address
-      const accounts = await web3.eth.getAccounts()
+      const accounts = await this.web3.eth.getAccounts()
 
       console.log('Sending from Metamask account: ' + accounts[0])
       // obtain contract address from storehash.js
-      const ethAddress = storehash.options.address
+      const ethAddress = this.storehash.options.address
       this.ethAddress = ethAddress
 
       this.ipfsHash = 'Uploading...'
@@ -162,7 +164,7 @@ export default {
         // return the transaction hash from the ethereum contract
         // see, this https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-send
 
-        storehash.methods.sendHash(this.ipfsHash).send({
+        this.storehash.methods.sendHash(this.ipfsHash).send({
           from: accounts[0]
         }, (error, transactionHash) => {
           if (error) {
