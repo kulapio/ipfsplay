@@ -2,5 +2,12 @@
   { "id": 1, "prefix": "https://ipfs.infura.io/ipfs" },
   { "id": 2, "prefix": "https://ipfs.io/ipfs" },
   { "id": 3, "prefix": "https://gateway.ipfs.io/ipfs" },
-  { "id": 4, "prefix": "https://www.eternum.io/ipfs" }
+  { "id": 4, "prefix": "https://www.eternum.io/ipfs" },
+
+  { "id": 5, "prefix": "https://siderus.io/ipfs" },
+  { "id": 6, "prefix": "https://xmine128.tk/ipfs" },
+  { "id": 7, "prefix": "https://ipfs.macholibre.org/ipfs" },
+  { "id": 8, "prefix": "https://ipfs.wa.hle.rs/ipfs" },
+  { "id": 9, "prefix": "https://ipfs.works/ipfs" },
+  { "id": 10, "prefix": "https://hardbin.com/ipfs" }
 ]
