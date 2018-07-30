@@ -69,8 +69,8 @@
 
 <script>
 import Web3 from 'web3'
-import ipfs from './ipfs'
-import { address, abi } from './storehash'
+import ipfs from '@/js/ipfs'
+import { address, abi } from '@/js/storehash'
 
 export default {
   name: 'P2PFileSharing',

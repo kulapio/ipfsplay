@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import ipfs from './ipfs'
+import ipfs from '@/js/ipfs'
 
 export default {
   name: 'P2PFileSharing',
