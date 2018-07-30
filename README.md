@@ -1,9 +1,9 @@
 # P2P File Sharing with IPFS
 
 # Technology stacks
-- [https://github.com/ipfs/js-ipfs](IPFS)
-- [https://vuejs.org/](Vuejs)
-- [https://infura.io/](INFURA)
+- [IPFS](https://github.com/ipfs/js-ipfs)
+- [Vuejs](https://vuejs.org/)
+- [INFURA](https://infura.io/)
 
 # Run
 - yarn install
