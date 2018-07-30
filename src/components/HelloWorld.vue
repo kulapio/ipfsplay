@@ -27,12 +27,15 @@
         <tr>
           <td>IPFS Hash # stored on Eth Contract</td>
           <td>
-            <a v-if="ipfsHash != '' && ipfsHash != 'Uploading...'" :href="ipfsLink" target="_blank">
-              {{ ipfsHash }}
+            {{ ipfsHash }}
+          </td>
+        </tr>
+        <tr v-if="ipfsHash != '' && ipfsHash != 'Uploading...'" v-for="(ipfsGateway, i) in ipfsGateways" :key="ipfsGateway">
+          <td>Link to File #{{ i+1 }}</td>
+          <td>
+            <a :href="`${ipfsGateway}/${ipfsHash}`" target="_blank">
+              {{ ipfsGateway }}/{{ipfsHash}}
             </a>
-            <span v-else>
-              {{ ipfsHash }}
-            </span>
           </td>
         </tr>
         <tr>
@@ -79,12 +82,13 @@ export default {
       blockNumber: '',
       transactionHash: '',
       gasUsed: '',
-      txReceipt: ''
-    }
-  },
-  computed: {
-    ipfsLink () {
-      return `https://ipfs.io/ipfs/${this.ipfsHash}`
+      txReceipt: '',
+      ipfsGateways: [
+        'https://ipfs.infura.io/ipfs',
+        'https://ipfs.io/ipfs',
+        'https://gateway.ipfs.io/ipfs',
+        'https://www.eternum.io/ipfs'
+      ]
     }
   },
   methods: {
