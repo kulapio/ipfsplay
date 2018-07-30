@@ -1,7 +1,7 @@
 <template>
   <div className="HelloWorld">
     <header className="App-header">
-      <h1> Ethereum and IPFS with Create React App</h1>
+      <h1> P2P File Sharing with IPFS</h1>
     </header>
 
     <hr />
