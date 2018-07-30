@@ -9,10 +9,40 @@
           </h1>
           <h2 class="subtitle">
             <Form v-on:submit.prevent="onSubmit">
-              <input type="file" @change="captureFile" class="button" />
-              <Button bsStyle="primary" type="submit" class="button is-success">
+              <b-field class="fileUpload">
+                <b-upload v-model="files"
+                  multiple
+                  drag-drop>
+                  <section class="section">
+                    <div class="content has-text-centered">
+                      <p>
+                        <b-icon
+                          icon="upload"
+                          size="is-large">
+                        </b-icon>
+                      </p>
+                      <p class="dropFileLabel">Drop your file here</p>
+                    </div>
+                  </section>
+                </b-upload>
+              </b-field>
+
+              <b-upload v-model="files">
+                <a class="button is-primary">
+                  <span>Select a file</span>
+                </a>
+              </b-upload>
+
+              <b-field class="file">
+                <span class="file-name"
+                  v-if="files && files.length">
+                  {{ files[0].name }}
+                </span>
+              </b-field>
+
+              <!-- <Button bsStyle="primary" type="submit" class="button is-success">
                 Send it
-              </Button>
+              </Button> -->
             </Form>
 
             <div v-if="isIpfsLinkReady" class="card">
@@ -69,7 +99,8 @@ export default {
   data () {
     return {
       ipfs: ipfs,
-
+      files: [],
+      dropFiles: [],
       ipfsHash: '',
       buffer: '',
       ipfsGateways: ipfsGateways
@@ -82,11 +113,11 @@ export default {
   },
   methods: {
 
-    async captureFile (event) {
-      console.log(`event ${event}`)
-      event.stopPropagation()
-      event.preventDefault()
-      const file = event.target.files[0]
+    async captureFile () {
+      // console.log(`event ${event}`)
+      // event.stopPropagation()
+      // event.preventDefault()
+      const file = this.files[0]
       let reader = new window.FileReader()
       reader.readAsArrayBuffer(file)
       reader.onloadend = () => this.convertToBuffer(reader)
@@ -98,7 +129,7 @@ export default {
       this.buffer = buffer
     },
 
-    async onSubmit (event) {
+    async onSubmit () {
       this.ipfsHash = 'Uploading...'
 
       // save document to IPFS,return its hash#, and set hash# to state
@@ -108,6 +139,16 @@ export default {
         // setState by setting ipfsHash to ipfsHash[0].hash
         this.ipfsHash = ipfsHash[0].hash
       }) // await ipfs.add
+    }
+  },
+  watch: {
+    files (newValue, oldValue) {
+      console.log(`newValue ${newValue} ${newValue[0]}`)
+      console.log(`oldValue ${oldValue} ${oldValue.length}`)
+      this.captureFile()
+    },
+    buffer (newValue, oldValue) {
+      this.onSubmit()
     }
   }
 }
@@ -124,5 +165,13 @@ export default {
 
 .linkTable {
   margin-top: 25px;
+}
+
+.fileUpload {
+  margin: 60px;
+}
+
+.dropFileLabel {
+  font-size: 32px;
 }
 </style>
