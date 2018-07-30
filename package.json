@@ -10,6 +10,7 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
+    "buefy": "^0.6.6",
     "fs-extra": "^7.0.0",
     "ipfs-api": "^22.2.4",
     "vue": "^2.5.16",

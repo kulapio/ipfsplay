@@ -1,45 +1,62 @@
 <template>
   <div className="P2PFileSharing">
-    <header className="App-header">
-      <h1> P2P File Sharing with IPFS</h1>
-    </header>
 
-    <hr />
+    <section class="hero is-medium is-primary is-bold">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            P2P File Sharing with IPFS
+          </h1>
+          <h2 class="subtitle">
+            <Form v-on:submit.prevent="onSubmit">
+              <input type="file" @change="captureFile" />
+              <Button bsStyle="primary" type="submit">
+                Send it
+              </Button>
+            </Form>
 
-    <h3> Choose file to send to IPFS </h3>
-    <Form v-on:submit.prevent="onSubmit">
-      <input type="file" @change="captureFile" />
-      <Button bsStyle="primary" type="submit">
-        Send it
-      </Button>
-    </Form>
-    <hr/>
-    <Table bordered responsive>
-      <thead>
-        <tr>
-          <th>Category</th>
-          <th>Values</th>
-        </tr>
-      </thead>
+            <div v-if="isIpfsLinkReady" class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  IPFS Hash #
+                </p>
+                <a href="#" class="card-header-icon" aria-label="more options">
+                  <span class="icon">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                  </span>
+                </a>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  {{ ipfsHash }}
+                </div>
+              </div>
+              <footer class="card-footer">
+                <a href="#" class="card-footer-item">Copy Hash</a>
+                <a href="#" class="card-footer-item">Copy Public Link</a>
+                <a href="#" class="card-footer-item">Share</a>
+              </footer>
+            </div>
 
-      <tbody>
-        <tr>
-          <td>IPFS Hash #</td>
-          <td>
-            {{ ipfsHash }}
-          </td>
-        </tr>
-        <tr v-if="ipfsHash != '' && ipfsHash != 'Uploading...'" v-for="(ipfsGateway, i) in ipfsGateways" :key="ipfsGateway">
-          <td>Link to File #{{ i+1 }}</td>
-          <td>
-            <a :href="`${ipfsGateway}/${ipfsHash}`" target="_blank">
-              {{ ipfsGateway }}/{{ipfsHash}}
-            </a>
-          </td>
-        </tr>
+            <span v-if="ipfsHash === 'Uploading...'">Uploading...</span>
 
-      </tbody>
-    </Table>
+            <b-table v-if="isIpfsLinkReady" :data="ipfsGateways" class="linkTable">
+              <template slot-scope="props">
+                <b-table-column field="id" label="ID">
+                  {{ props.row.id }}
+                </b-table-column>
+
+                <b-table-column field="prefix" label="Link">
+                  <a :href="`${props.row.prefix}/${ipfsHash}`" target="_blank">
+                    {{ props.row.prefix }}/{{ipfsHash}}
+                  </a>
+                </b-table-column>
+              </template>
+            </b-table>
+          </h2>
+        </div>
+      </div>
+    </section>
 
     <div class="content has-text-centered">
       <p>
@@ -62,11 +79,16 @@ export default {
       ipfsHash: '',
       buffer: '',
       ipfsGateways: [
-        'https://ipfs.infura.io/ipfs',
-        'https://ipfs.io/ipfs',
-        'https://gateway.ipfs.io/ipfs',
-        'https://www.eternum.io/ipfs'
+        { id: 1, prefix: 'https://ipfs.infura.io/ipfs' },
+        { id: 2, prefix: 'https://ipfs.io/ipfs' },
+        { id: 3, prefix: 'https://gateway.ipfs.io/ipfs' },
+        { id: 4, prefix: 'https://www.eternum.io/ipfs' }
       ]
+    }
+  },
+  computed: {
+    isIpfsLinkReady () {
+      return this.ipfsHash !== '' && this.ipfsHash !== 'Uploading...'
     }
   },
   methods: {
@@ -102,33 +124,16 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.hero.is-primary .subtitle a:not(.button), .hero.is-primary .subtitle strong {
+  color: #7957d5;
 }
 
-/*some css I added*/
-input[type=”file”] {
- display: inline-block;
+.card {
+  margin-top: 25px;
 }
-.table {
- max-width: 90%;
- margin: 10px;
+
+.linkTable {
+  margin-top: 25px;
 }
-.table th {
- text-align: center;
-}
-/*end of my css*/
 </style>
