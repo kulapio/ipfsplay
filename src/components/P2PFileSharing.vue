@@ -52,7 +52,7 @@
               <footer class="card-footer">
                 <a class="card-footer-item" @click="copyHash">Copy Hash</a>
                 <a class="card-footer-item" @click="copyPublicLink">Copy Public Link</a>
-                <social-sharing :url="`https://www.kulap.io/hash/${ipfsHash}`"
+                <social-sharing :url="shareUrl"
                   class="card-footer-item share"
                   title="I just share a file via IPFS!"
                   description="I just share a file via IPFS!"
@@ -115,14 +115,22 @@ export default {
       ipfs: ipfs,
       files: [],
       dropFiles: [],
-      ipfsHash: '',
       buffer: '',
       ipfsGateways: ipfsGateways
+    }
+  },
+  props: {
+    ipfsHash: {
+      type: String,
+      default: ''
     }
   },
   computed: {
     isIpfsLinkReady () {
       return this.ipfsHash !== ''
+    },
+    shareUrl () {
+      return `${this.$store.state.sharePrefix}/${this.ipfsHash}`
     }
   },
   methods: {

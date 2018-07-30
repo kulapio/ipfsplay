@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import WithEthereum from './views/WithEthereum'
+import LinkWithHash from './views/LinkWithHash'
 
 Vue.use(Router)
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/WithEthereum',
       name: 'WithEthereum',
       component: WithEthereum
+    },
+    {
+      path: '/hash/:hash',
+      name: 'hash',
+      component: LinkWithHash
     },
     {
       path: '/about',

@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
+    sharePrefix: 'http://localhost:8080/#/hash'
   },
   mutations: {
 
