@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    sharePrefix: 'https://dev.kulap.io/ipfs/#/hash'
+    sharePrefix: 'http://dev.kulap.io/ipfs/#/hash'
   },
   mutations: {
 
