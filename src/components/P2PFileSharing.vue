@@ -42,7 +42,7 @@
 
             <b-table v-if="isIpfsLinkReady" :data="ipfsGateways" class="linkTable">
               <template slot-scope="props">
-                <b-table-column field="id" label="ID">
+                <b-table-column field="id" label="Node">
                   {{ props.row.id }}
                 </b-table-column>
 
