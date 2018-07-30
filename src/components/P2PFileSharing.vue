@@ -52,7 +52,20 @@
               <footer class="card-footer">
                 <a class="card-footer-item" @click="copyHash">Copy Hash</a>
                 <a class="card-footer-item" @click="copyPublicLink">Copy Public Link</a>
-                <a class="card-footer-item" @click="doShare">Share</a>
+                <social-sharing :url="`https://www.kulap.io/hash/${ipfsHash}`"
+                  class="card-footer-item share"
+                  title="I just share a file via IPFS!"
+                  description="I just share a file via IPFS!"
+                  quote="I just share a file via IPFS!"
+                  hashtags="ipfs,infura"
+                  twitter-user="kulap"
+                  inline-template>
+                  <div>
+                    <network network="facebook">
+                      <i class="fa fa-facebook"></i>Share
+                    </network>
+                  </div>
+                </social-sharing>
               </footer>
             </div>
 
@@ -109,7 +122,7 @@ export default {
   },
   computed: {
     isIpfsLinkReady () {
-      return this.state === State.Finished
+      return this.ipfsHash !== ''
     }
   },
   methods: {
@@ -164,9 +177,6 @@ export default {
     copyPublicLink () {
       const link = `${this.ipfsGateways[0].prefix}/${this.ipfsHash}`
       this.copyText(link)
-    },
-    doShare () {
-      console.log('doShare')
     }
   },
   watch: {
@@ -205,5 +215,19 @@ export default {
 
 .uploading {
   margin: 80px;
+}
+</style>
+
+<style>
+.card-footer-item.share {
+  padding: 0px;
+}
+
+.card-footer-item.share span {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  color: #7957d5;
+  cursor: pointer;
 }
 </style>
