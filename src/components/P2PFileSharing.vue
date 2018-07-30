@@ -31,13 +31,6 @@
                   <span>Select a file</span>
                 </a>
               </b-upload>
-
-              <!-- <b-field class="file">
-                <span class="file-name"
-                  v-if="files && files.length">
-                  {{ files[0].name }}
-                </span>
-              </b-field> -->
             </Form>
 
             <div v-if="isIpfsLinkReady" class="card">
