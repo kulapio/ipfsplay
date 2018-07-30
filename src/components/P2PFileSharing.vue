@@ -1,5 +1,5 @@
 <template>
-  <div className="HelloWorld">
+  <div className="P2PFileSharing">
     <header className="App-header">
       <h1> P2P File Sharing with IPFS</h1>
     </header>
@@ -66,10 +66,7 @@ import ipfs from './ipfs'
 import storehash from './storehash'
 
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
+  name: 'P2PFileSharing',
   data () {
     return {
       web3: web3,

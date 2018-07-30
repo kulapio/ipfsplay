@@ -1,18 +1,18 @@
 <template>
   <div class="home">
     <img src="../assets/logo.png" class="logo">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <P2PFileSharing/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import P2PFileSharing from '@/components/P2PFileSharing'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    P2PFileSharing
   }
 }
 </script>
