@@ -9,8 +9,8 @@
           </h1>
           <h2 class="subtitle">
             <Form v-on:submit.prevent="onSubmit">
-              <input type="file" @change="captureFile" />
-              <Button bsStyle="primary" type="submit">
+              <input type="file" @change="captureFile" class="button" />
+              <Button bsStyle="primary" type="submit" class="button is-success">
                 Send it
               </Button>
             </Form>
