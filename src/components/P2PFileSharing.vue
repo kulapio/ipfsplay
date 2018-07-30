@@ -17,14 +17,14 @@
     <Table bordered responsive>
       <thead>
         <tr>
-          <th>Tx Receipt Category</th>
+          <th>Category</th>
           <th>Values</th>
         </tr>
       </thead>
 
       <tbody>
         <tr>
-          <td>IPFS Hash # stored on Eth Contract</td>
+          <td>IPFS Hash #</td>
           <td>
             {{ ipfsHash }}
           </td>
