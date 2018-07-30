@@ -26,7 +26,14 @@
       <tbody>
         <tr>
           <td>IPFS Hash # stored on Eth Contract</td>
-          <td>{{ ipfsHash }}</td>
+          <td>
+            <a v-if="ipfsHash != '' && ipfsHash != 'Uploading...'" :href="ipfsLink" target="_blank">
+              {{ ipfsHash }}
+            </a>
+            <span v-else>
+              {{ ipfsHash }}
+            </span>
+          </td>
         </tr>
         <tr>
           <td>Ethereum Contract Address</td>
@@ -66,13 +73,18 @@ export default {
       storehash: storehash,
       ipfs: ipfs,
 
-      ipfsHash: null,
+      ipfsHash: '',
       buffer: '',
       ethAddress: '',
       blockNumber: '',
       transactionHash: '',
       gasUsed: '',
       txReceipt: ''
+    }
+  },
+  computed: {
+    ipfsLink () {
+      return `https://ipfs.io/ipfs/${this.ipfsHash}`
     }
   },
   methods: {
@@ -129,6 +141,9 @@ export default {
       // obtain contract address from storehash.js
       const ethAddress = storehash.options.address
       this.ethAddress = ethAddress
+
+      this.ipfsHash = 'Uploading...'
+
       // save document to IPFS,return its hash#, and set hash# to state
       // https:// github.com/ipfs/interface-ipfs-core/blob/master/SPEC/FILES.md#add
       await ipfs.add(this.buffer, (err, ipfsHash) => {
