@@ -56,7 +56,10 @@
               </footer>
             </div>
 
-            <span v-if="state === State.Uploading">Uploading...</span>
+            <div v-if="state === State.Uploading" class="uploading">
+              <vue-loading type="bars" color="#5ac1dd" :size="{ width: '50px', height: '50px' }"></vue-loading>
+              <span>Uploading...</span>
+            </div>
 
             <b-table v-if="isIpfsLinkReady" :data="ipfsGateways" class="linkTable">
               <template slot-scope="props">
@@ -172,5 +175,9 @@ export default {
 
 .dropFileLabel {
   font-size: 32px;
+}
+
+.uploading {
+  margin: 80px;
 }
 </style>
